@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/margin_small"
+    app:cardCornerRadius="@dimen/card_corner_radius"
+    app:cardElevation="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/padding_medium">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="4dp">
+
+            <TextView
+                android:id="@+id/tv_error_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Grammar"
+                android:textSize="@dimen/text_size_small"
+                android:textStyle="bold"
+                android:textColor="@color/error"
+                android:background="#FFEBEE"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:layout_marginEnd="@dimen/margin_small"/>
+
+            <TextView
+                android:id="@+id/tv_suggestion_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Consider using 'their' instead of 'there'."
+                android:textSize="@dimen/text_size_normal"
+                android:textColor="@color/text_primary"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_original_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Original: I went to there house."
+            android:textSize="@dimen/text_size_small"
+            android:textColor="@color/text_secondary"
+            android:layout_marginTop="4dp"/>
+
+        <Button
+            android:id="@+id/btn_apply_fix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Apply Fix"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:textColor="@color/primary"
+            android:padding="0dp"
+            android:layout_gravity="end"/>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

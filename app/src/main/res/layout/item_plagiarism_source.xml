@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+List item for a single matched source in the Plagiarism Detection screen.
+- Displays the source URL, a short description, and the similarity percentage.
+- Refined for consistency with other UI elements.
+-->
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/margin_small"
+    android:layout_marginBottom="@dimen/margin_small"
+    app:cardCornerRadius="@dimen/card_corner_radius"
+    app:cardElevation="2dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_medium">
+
+        <ImageView
+            android:id="@+id/iv_source_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_link"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_source_url"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_source_description"/>
+
+        <TextView
+            android:id="@+id/tv_source_url"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="www.example-journal.com/article123"
+            android:textSize="@dimen/text_size_normal"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            android:layout_marginStart="@dimen/margin_medium"
+            app:layout_constraintStart_toEndOf="@id/iv_source_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_source_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Matched content from a published journal article."
+            android:textSize="@dimen/text_size_small"
+            android:textColor="@color/text_secondary"
+            android:layout_marginTop="4dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_source_url"
+            app:layout_constraintStart_toStartOf="@id/tv_source_url"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <ProgressBar
+            android:id="@+id/progress_similarity"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="6dp"
+            android:max="100"
+            android:progress="45"
+            android:progressDrawable="@drawable/progress_plagiarism"
+            android:layout_marginTop="@dimen/margin_medium"
+            app:layout_constraintTop_toBottomOf="@id/tv_source_description"
+            app:layout_constraintStart_toStartOf="@id/tv_source_url"
+            app:layout_constraintEnd_toStartOf="@id/tv_similarity_percentage"
+            android:layout_marginEnd="@dimen/margin_small"/>
+
+        <TextView
+            android:id="@+id/tv_similarity_percentage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="45% Similar"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="bold"
+            android:textColor="@color/plagiarism_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/progress_similarity"
+            app:layout_constraintBottom_toBottomOf="@id/progress_similarity"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
