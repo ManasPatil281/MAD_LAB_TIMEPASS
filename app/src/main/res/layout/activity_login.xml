@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Login Activity Layout
-- Premium gradient background
-- Glassmorphism effect card
-- Modern floating action buttons or standard buttons
+Login Activity Layout - ScholarHub
+Editorial login with gradient background and premium card
 -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -22,42 +20,46 @@ Login Activity Layout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="32dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="32dp"
             android:gravity="center">
 
             <!-- Logo and Header -->
             <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@mipmap/ic_launcher_round"
-                android:layout_marginBottom="24dp"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:src="@drawable/ic_review"
+                android:tint="@color/primary_fixed_dim"
+                android:layout_marginBottom="20dp"
                 android:layout_marginTop="48dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Welcome Back"
+                android:text="ScholarHub"
                 android:textColor="@color/white"
                 android:textSize="32sp"
-                android:textStyle="bold"
+                android:textStyle="bold|italic"
+                android:fontFamily="serif"
                 android:layout_marginBottom="8dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sign in to continue your research"
-                android:textColor="@color/white"
-                android:alpha="0.8"
-                android:textSize="16sp"
-                android:layout_marginBottom="48dp" />
+                android:textColor="#B0B8FF"
+                android:textSize="15sp"
+                android:layout_marginBottom="40dp" />
 
             <!-- Login Form Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="20dp"
-                app:cardElevation="8dp"
-                app:cardBackgroundColor="@color/white">
+                app:cardElevation="12dp"
+                app:cardBackgroundColor="@color/surface_container_lowest">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -65,11 +67,28 @@ Login Activity Layout
                     android:orientation="vertical"
                     android:padding="24dp">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Welcome Back"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/on_surface"
+                        android:fontFamily="serif"
+                        android:layout_marginBottom="20dp" />
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Email Address"
                         app:startIconDrawable="@drawable/ic_ai_positive"
+                        app:startIconTint="@color/primary"
+                        app:boxStrokeColor="@color/primary"
+                        app:hintTextColor="@color/primary"
+                        app:boxCornerRadiusTopStart="@dimen/card_corner_radius"
+                        app:boxCornerRadiusTopEnd="@dimen/card_corner_radius"
+                        app:boxCornerRadiusBottomStart="@dimen/card_corner_radius"
+                        app:boxCornerRadiusBottomEnd="@dimen/card_corner_radius"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_marginBottom="16dp">
 
@@ -77,7 +96,10 @@ Login Activity Layout
                             android:id="@+id/et_email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="textEmailAddress" />
+                            android:inputType="textEmailAddress"
+                            android:textColor="@color/on_surface"
+                            android:textColorHint="@color/outline"
+                            android:textSize="16sp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -86,26 +108,36 @@ Login Activity Layout
                         android:layout_height="wrap_content"
                         android:hint="Password"
                         app:startIconDrawable="@drawable/ic_check"
+                        app:startIconTint="@color/primary"
                         app:endIconMode="password_toggle"
+                        app:boxStrokeColor="@color/primary"
+                        app:hintTextColor="@color/primary"
+                        app:boxCornerRadiusTopStart="@dimen/card_corner_radius"
+                        app:boxCornerRadiusTopEnd="@dimen/card_corner_radius"
+                        app:boxCornerRadiusBottomStart="@dimen/card_corner_radius"
+                        app:boxCornerRadiusBottomEnd="@dimen/card_corner_radius"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_marginBottom="24dp">
+                        android:layout_marginBottom="28dp">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="textPassword" />
+                            android:inputType="textPassword"
+                            android:textColor="@color/on_surface"
+                            android:textColorHint="@color/outline"
+                            android:textSize="16sp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <Button
                         android:id="@+id/btn_login"
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
+                        android:layout_height="56dp"
                         android:text="Login"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:textStyle="bold"
-                        app:cornerRadius="10dp" />
+                        style="@style/Button.Primary" />
 
                     <TextView
                         android:id="@+id/tv_forgot_password"
@@ -113,6 +145,7 @@ Login Activity Layout
                         android:layout_height="wrap_content"
                         android:text="Forgot Password?"
                         android:textColor="@color/primary"
+                        android:textSize="@dimen/text_size_normal"
                         android:layout_gravity="center"
                         android:layout_marginTop="16dp"
                         android:clickable="true"
@@ -127,13 +160,15 @@ Login Activity Layout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="32dp">
+                android:layout_marginTop="28dp"
+                android:gravity="center_vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Don't have an account? "
-                    android:textColor="@color/white" />
+                    android:textColor="#B0B8FF"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/tv_signup"
@@ -142,8 +177,10 @@ Login Activity Layout
                     android:text="Sign Up"
                     android:textColor="@color/white"
                     android:textStyle="bold"
+                    android:textSize="15sp"
                     android:clickable="true"
-                    android:focusable="true"/>
+                    android:focusable="true"
+                    android:padding="4dp" />
 
             </LinearLayout>
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Paper Review Screen - ScholarMate
-Comprehensive paper review with detailed analysis sections
+Paper Review Screen - ScholarHub
+Integrity & Peer Review with bento grid, verdict card, strengths/weaknesses, and editorial styling
 -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -9,18 +9,72 @@ Comprehensive paper review with detailed analysis sections
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_secondary"
+    android:background="@color/surface"
     tools:context=".PaperReviewActivity">
 
-    <!-- App Bar -->
+    <!-- TopAppBar - Frosted Glass -->
+    <FrameLayout
+        android:id="@+id/toolbar_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:elevation="2dp"
+        android:background="@color/surface_container_lowest">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolbar_height"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/padding_medium"
+                android:paddingEnd="@dimen/padding_medium">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_small"
+                    android:layout_height="@dimen/icon_small"
+                    android:src="@drawable/ic_review"
+                    android:tint="@color/primary_container"
+                    android:layout_marginEnd="@dimen/margin_small" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="ScholarHub"
+                    android:textSize="20sp"
+                    android:textStyle="bold|italic"
+                    android:textColor="@color/primary_container"
+                    android:fontFamily="serif" />
+
+                <ImageView
+                    android:layout_width="@dimen/icon_small"
+                    android:layout_height="@dimen/icon_small"
+                    android:src="@drawable/ic_users"
+                    android:tint="@color/primary_container" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/surface_container_high" />
+
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- Hidden toolbar -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/primary"
-        android:elevation="4dp"
-        app:title="Paper Reviewer"
-        app:titleTextColor="@color/white"
+        android:layout_height="0dp"
+        android:visibility="gone"
         app:navigationIcon="@drawable/ic_back"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +85,8 @@ Comprehensive paper review with detailed analysis sections
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_container"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -40,7 +95,34 @@ Comprehensive paper review with detailed analysis sections
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/padding_medium">
+            android:padding="@dimen/padding_medium"
+            android:paddingBottom="100dp">
+
+            <!-- Editorial Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="@dimen/margin_large">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="QUALITY ASSESSMENT"
+                    style="@style/Text.Label.Upper"
+                    android:textColor="@color/primary"
+                    android:layout_marginBottom="@dimen/margin_small" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Integrity &amp; Peer Review"
+                    android:textSize="@dimen/text_size_headline"
+                    android:textStyle="bold"
+                    android:textColor="@color/on_surface"
+                    android:fontFamily="serif" />
+
+            </LinearLayout>
 
             <!-- Upload Section -->
             <com.google.android.material.card.MaterialCardView
@@ -49,6 +131,7 @@ Comprehensive paper review with detailed analysis sections
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="@dimen/card_corner_radius"
                 app:cardElevation="@dimen/card_elevation"
+                app:cardBackgroundColor="@color/surface_container_lowest"
                 android:layout_marginBottom="@dimen/margin_medium">
 
                 <LinearLayout
@@ -64,16 +147,22 @@ Comprehensive paper review with detailed analysis sections
                         android:text="Upload Research Paper"
                         android:textSize="@dimen/text_size_large"
                         android:textStyle="bold"
-                        android:textColor="@color/text_primary"
+                        android:textColor="@color/on_surface"
+                        android:fontFamily="serif"
                         android:layout_marginBottom="@dimen/margin_small" />
 
                     <TextView
+                        android:textColor="@color/on_surface_variant"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="PDF format • Max 10MB"
-                        android:textSize="@dimen/text_size_small"
-                        android:textColor="@color/text_secondary"
-                        android:layout_marginBottom="@dimen/margin_large" />
+                        android:layout_marginBottom="@dimen/margin_medium" />
+
+                    <include
+                        android:id="@+id/model_selector"
+                        layout="@layout/layout_model_selector"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_medium" />
 
                     <Button
                         android:id="@+id/btn_upload_paper"
@@ -84,7 +173,7 @@ Comprehensive paper review with detailed analysis sections
                         android:drawablePadding="@dimen/padding_small"
                         style="@style/Button.Primary" />
 
-                    <!-- File Info (hidden until file selected) -->
+                    <!-- File Info -->
                     <LinearLayout
                         android:id="@+id/ll_file_info"
                         android:layout_width="match_parent"
@@ -100,6 +189,7 @@ Comprehensive paper review with detailed analysis sections
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:src="@drawable/ic_document"
+                            android:tint="@color/primary"
                             android:layout_marginEnd="@dimen/margin_small" />
 
                         <LinearLayout
@@ -115,7 +205,7 @@ Comprehensive paper review with detailed analysis sections
                                 android:text="research_paper.pdf"
                                 android:textSize="@dimen/text_size_medium"
                                 android:textStyle="bold"
-                                android:textColor="@color/text_primary"
+                                android:textColor="@color/on_surface"
                                 tools:ignore="HardcodedText" />
 
                             <TextView
@@ -124,7 +214,7 @@ Comprehensive paper review with detailed analysis sections
                                 android:layout_height="wrap_content"
                                 android:text="2.5 MB"
                                 android:textSize="@dimen/text_size_small"
-                                android:textColor="@color/text_secondary"
+                                android:textColor="@color/on_surface_variant"
                                 tools:ignore="HardcodedText" />
 
                         </LinearLayout>
@@ -134,6 +224,7 @@ Comprehensive paper review with detailed analysis sections
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@drawable/ic_close"
+                            android:tint="@color/outline"
                             android:clickable="true"
                             android:focusable="true" />
 
@@ -187,7 +278,8 @@ Comprehensive paper review with detailed analysis sections
                             android:text="Reviewing your paper..."
                             android:textSize="@dimen/text_size_large"
                             android:textStyle="bold"
-                            android:textColor="@color/text_primary"
+                            android:textColor="@color/on_surface"
+                            android:fontFamily="serif"
                             android:layout_marginTop="@dimen/margin_large"
                             android:layout_marginBottom="@dimen/margin_small" />
 
@@ -197,7 +289,7 @@ Comprehensive paper review with detailed analysis sections
                             android:layout_height="wrap_content"
                             android:text="Analyzing structure and content..."
                             android:textSize="@dimen/text_size_normal"
-                            android:textColor="@color/text_secondary"
+                            android:textColor="@color/on_surface_variant"
                             android:textAlignment="center" />
 
                     </LinearLayout>
@@ -214,241 +306,99 @@ Comprehensive paper review with detailed analysis sections
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <!-- Overall Score Card -->
-                <com.google.android.material.card.MaterialCardView
+                <!-- Overall Score + Verdict Header -->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="@dimen/card_corner_radius"
-                    app:cardElevation="@dimen/card_elevation"
-                    app:cardBackgroundColor="@drawable/gradient_score"
+                    android:orientation="horizontal"
+                    android:gravity="bottom"
                     android:layout_marginBottom="@dimen/margin_medium">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="@dimen/padding_large"
-                        android:gravity="center">
+                        android:layout_weight="1"
+                        android:text="Review Insights"
+                        android:textSize="@dimen/text_size_xlarge"
+                        android:textStyle="bold"
+                        android:textColor="@color/on_surface"
+                        android:fontFamily="serif" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Overall Score"
-                            android:textSize="@dimen/text_size_medium"
-                            android:textColor="@color/white"
-                            android:alpha="0.9"
-                            android:layout_marginBottom="@dimen/margin_small" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="bottom">
 
                         <TextView
                             android:id="@+id/tv_overall_score"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="8.5/10"
-                            android:textSize="48sp"
+                            android:text="8.5"
+                            android:textSize="20sp"
                             android:textStyle="bold"
-                            android:textColor="@color/white"
+                            android:textColor="@color/primary"
+                            android:fontFamily="serif"
                             tools:ignore="HardcodedText" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="/10"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textColor="@color/outline" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!-- Peer Verdict Card (Gradient) -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/card_corner_radius"
+                    app:cardElevation="@dimen/card_elevation"
+                    android:layout_marginBottom="@dimen/margin_medium">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@drawable/gradient_card"
+                        android:padding="@dimen/padding_large">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="PEER VERDICT"
+                            android:textSize="9sp"
+                            android:textAllCaps="true"
+                            android:textStyle="bold"
+                            android:letterSpacing="0.2"
+                            android:textColor="@color/white"
+                            android:alpha="0.7"
+                            android:layout_marginBottom="4dp" />
 
                         <TextView
                             android:id="@+id/tv_score_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Excellent Work"
-                            android:textSize="@dimen/text_size_large"
+                            android:text="Accept with Minor Revision"
+                            android:textSize="@dimen/text_size_xlarge"
+                            android:textStyle="bold|italic"
                             android:textColor="@color/white"
-                            android:layout_marginTop="@dimen/margin_small"
+                            android:fontFamily="serif"
+                            android:layout_marginBottom="@dimen/margin_small"
                             tools:ignore="HardcodedText" />
-
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <!-- Strengths Card -->
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardCornerRadius="@dimen/card_corner_radius"
-                    app:cardElevation="@dimen/card_elevation"
-                    android:layout_marginBottom="@dimen/margin_medium">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="@dimen/padding_large">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical"
-                            android:layout_marginBottom="@dimen/margin_medium">
-
-                            <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:src="@drawable/ic_check_circle"
-                                android:tint="@color/success"
-                                android:layout_marginEnd="@dimen/margin_small" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Strengths"
-                                android:textSize="@dimen/text_size_large"
-                                android:textStyle="bold"
-                                android:textColor="@color/text_primary" />
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:id="@+id/tv_strengths"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="• Well-structured methodology\n• Clear research objectives\n• Comprehensive literature review\n• Strong data analysis"
-                            android:textSize="@dimen/text_size_normal"
-                            android:textColor="@color/text_primary"
-                            android:lineSpacingExtra="6dp"
-                            tools:ignore="HardcodedText" />
-
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <!-- Weaknesses Card -->
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardCornerRadius="@dimen/card_corner_radius"
-                    app:cardElevation="@dimen/card_elevation"
-                    android:layout_marginBottom="@dimen/margin_medium">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="@dimen/padding_large">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical"
-                            android:layout_marginBottom="@dimen/margin_medium">
-
-                            <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:src="@drawable/ic_warning_circle"
-                                android:tint="@color/warning"
-                                android:layout_marginEnd="@dimen/margin_small" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Areas for Improvement"
-                                android:textSize="@dimen/text_size_large"
-                                android:textStyle="bold"
-                                android:textColor="@color/text_primary" />
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:id="@+id/tv_weaknesses"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="• Limited discussion of limitations\n• Could expand on future research\n• Some figures need better captions"
-                            android:textSize="@dimen/text_size_normal"
-                            android:textColor="@color/text_primary"
-                            android:lineSpacingExtra="6dp"
-                            tools:ignore="HardcodedText" />
-
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <!-- Suggestions Card -->
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardCornerRadius="@dimen/card_corner_radius"
-                    app:cardElevation="@dimen/card_elevation"
-                    android:layout_marginBottom="@dimen/margin_medium">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="@dimen/padding_large">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical"
-                            android:layout_marginBottom="@dimen/margin_medium">
-
-                            <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:src="@drawable/ic_lightbulb"
-                                android:tint="@color/info"
-                                android:layout_marginEnd="@dimen/margin_small" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Recommendations"
-                                android:textSize="@dimen/text_size_large"
-                                android:textStyle="bold"
-                                android:textColor="@color/text_primary" />
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:id="@+id/tv_suggestions"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="1. Add a dedicated limitations section\n2. Expand the conclusion with future directions\n3. Improve figure quality and captions\n4. Consider adding more recent citations"
-                            android:textSize="@dimen/text_size_normal"
-                            android:textColor="@color/text_primary"
-                            android:lineSpacingExtra="6dp"
-                            tools:ignore="HardcodedText" />
-
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <!-- Final Verdict Card -->
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardCornerRadius="@dimen/card_corner_radius"
-                    app:cardElevation="@dimen/card_elevation"
-                    android:layout_marginBottom="@dimen/margin_medium">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="@dimen/padding_large">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Final Verdict"
-                            android:textSize="@dimen/text_size_large"
-                            android:textStyle="bold"
-                            android:textColor="@color/text_primary"
-                            android:layout_marginBottom="@dimen/margin_medium" />
 
                         <TextView
                             android:id="@+id/tv_verdict"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="This is a well-executed research paper with strong methodology and analysis. With minor revisions addressing the identified weaknesses, this paper will be publication-ready."
-                            android:textSize="@dimen/text_size_normal"
-                            android:textColor="@color/text_primary"
+                            android:text="The methodology is sound, but data visualization requires higher fidelity before print."
+                            android:textSize="@dimen/text_size_small"
+                            android:textColor="@color/white"
+                            android:alpha="0.8"
                             android:lineSpacingExtra="4dp"
                             tools:ignore="HardcodedText" />
 
@@ -456,35 +406,179 @@ Comprehensive paper review with detailed analysis sections
 
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Action Buttons -->
+                <!-- Strengths & Weaknesses Bento -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/margin_medium">
 
-                    <Button
-                        android:id="@+id/btn_save_review"
+                    <!-- Strengths -->
+                    <com.google.android.material.card.MaterialCardView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Save PDF"
-                        android:drawableStart="@drawable/ic_download"
-                        android:drawablePadding="@dimen/padding_small"
                         android:layout_marginEnd="@dimen/margin_small"
-                        style="@style/Button.Primary" />
+                        app:cardCornerRadius="@dimen/card_corner_radius"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="@color/surface_container_lowest"
+                        app:strokeColor="@color/outline_variant"
+                        app:strokeWidth="0.5dp">
 
-                    <Button
-                        android:id="@+id/btn_new_review"
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="@dimen/padding_large">
+
+                            <FrameLayout
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:background="@drawable/bg_tip_box"
+                                android:layout_marginBottom="@dimen/margin_small">
+
+                                <ImageView
+                                    android:layout_width="16dp"
+                                    android:layout_height="16dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_check_circle"
+                                    android:tint="@color/secondary" />
+
+                            </FrameLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="STRENGTHS"
+                                style="@style/Text.Label.Upper"
+                                android:layout_marginBottom="4dp" />
+
+                            <TextView
+                                android:id="@+id/tv_strengths"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Novel approach to market volatility models."
+                                android:textSize="@dimen/text_size_small"
+                                android:textStyle="bold"
+                                android:textColor="@color/on_surface"
+                                android:lineSpacingExtra="4dp"
+                                tools:ignore="HardcodedText" />
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Weaknesses -->
+                    <com.google.android.material.card.MaterialCardView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="New Review"
-                        android:drawableStart="@drawable/ic_refresh"
-                        android:drawablePadding="@dimen/padding_small"
                         android:layout_marginStart="@dimen/margin_small"
-                        style="@style/Button.Secondary" />
+                        app:cardCornerRadius="@dimen/card_corner_radius"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="@color/surface_container_lowest"
+                        app:strokeColor="@color/outline_variant"
+                        app:strokeWidth="0.5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="@dimen/padding_large">
+
+                            <FrameLayout
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_marginBottom="@dimen/margin_small">
+
+                                <ImageView
+                                    android:layout_width="16dp"
+                                    android:layout_height="16dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_warning_circle"
+                                    android:tint="@color/on_tertiary_container" />
+
+                            </FrameLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="WEAKNESSES"
+                                style="@style/Text.Label.Upper"
+                                android:layout_marginBottom="4dp" />
+
+                            <TextView
+                                android:id="@+id/tv_weaknesses"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Sample size in pilot study is restricted."
+                                android:textSize="@dimen/text_size_small"
+                                android:textStyle="bold"
+                                android:textColor="@color/on_surface"
+                                android:lineSpacingExtra="4dp"
+                                tools:ignore="HardcodedText" />
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
 
                 </LinearLayout>
+
+                <!-- Suggestions Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/card_corner_radius"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/surface_container_low"
+                    android:layout_marginBottom="@dimen/margin_medium">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/padding_large">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="RECOMMENDATIONS"
+                            style="@style/Text.Label.Upper"
+                            android:layout_marginBottom="@dimen/margin_small" />
+
+                        <TextView
+                            android:id="@+id/tv_suggestions"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="1. Add a dedicated limitations section\n2. Expand the conclusion with future directions\n3. Improve figure quality and captions"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textColor="@color/on_surface"
+                            android:lineSpacingExtra="6dp"
+                            tools:ignore="HardcodedText" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- CTA Buttons -->
+                <Button
+                    android:id="@+id/btn_save_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Generate Full Report"
+                    android:drawableStart="@drawable/ic_download"
+                    android:drawablePadding="@dimen/padding_small"
+                    android:layout_marginBottom="@dimen/margin_medium"
+                    style="@style/Button.Primary" />
+
+                <Button
+                    android:id="@+id/btn_new_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="View Suggested Edits"
+                    android:drawableStart="@drawable/ic_review_start"
+                    android:drawablePadding="@dimen/padding_small"
+                    style="@style/Button.Secondary" />
 
             </LinearLayout>
 

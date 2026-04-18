@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Grammar & Style Check Screen - ScholarMate
-Enhanced UI with better visual hierarchy and user experience
-Features:
-- Material Design card for input area
-- Character counter
-- Language selector
-- Clear text button
-- Enhanced results display with categories
-- Empty state message
-- Loading indicator with text
+Grammar & Style Check Screen - ScholarHub
+Editorial editor interface with inline corrections, tooltips, and stat counters
 -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -17,18 +9,72 @@ Features:
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_secondary"
+    android:background="@color/surface"
     tools:context=".GrammarCheckActivity">
 
-    <!-- App Bar -->
+    <!-- TopAppBar - Frosted Glass -->
+    <FrameLayout
+        android:id="@+id/toolbar_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:elevation="2dp"
+        android:background="@color/surface_container_lowest">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolbar_height"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/padding_medium"
+                android:paddingEnd="@dimen/padding_medium">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_small"
+                    android:layout_height="@dimen/icon_small"
+                    android:src="@drawable/ic_review"
+                    android:tint="@color/primary_container"
+                    android:layout_marginEnd="@dimen/margin_small" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="ScholarHub"
+                    android:textSize="20sp"
+                    android:textStyle="bold|italic"
+                    android:textColor="@color/primary_container"
+                    android:fontFamily="serif" />
+
+                <ImageView
+                    android:layout_width="@dimen/icon_small"
+                    android:layout_height="@dimen/icon_small"
+                    android:src="@drawable/ic_users"
+                    android:tint="@color/primary_container" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/surface_container_high" />
+
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- Hidden toolbar -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/primary"
-        android:elevation="4dp"
-        app:title="Grammar &amp; Style Check"
-        app:titleTextColor="@color/white"
+        android:layout_height="0dp"
+        android:visibility="gone"
         app:navigationIcon="@drawable/ic_back"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +85,8 @@ Features:
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_container"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -48,7 +95,187 @@ Features:
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/padding_medium">
+            android:padding="@dimen/padding_medium"
+            android:paddingBottom="100dp">
+
+            <!-- Editorial Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="@dimen/margin_large">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="@dimen/margin_small">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="EDITOR MODE"
+                        android:textSize="9sp"
+                        android:textAllCaps="true"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.1"
+                        android:textColor="@color/on_secondary"
+                        android:background="@drawable/bg_badge_safe"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingTop="3dp"
+                        android:paddingBottom="3dp"
+                        android:layout_marginEnd="@dimen/margin_small" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="DRAFT #14"
+                        style="@style/Text.Label.Upper"
+                        android:textColor="@color/outline" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Grammar &amp; Style"
+                    android:textSize="@dimen/text_size_headline"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary"
+                    android:fontFamily="serif"
+                    android:layout_marginBottom="@dimen/margin_small" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Refining the philosophical inquiry into cognitive dissonance within academic structures."
+                    android:textSize="@dimen/text_size_large"
+                    android:textColor="@color/on_surface_variant"
+                    android:lineSpacingExtra="4dp" />
+
+            </LinearLayout>
+
+            <!-- Metric Bento Grid -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/margin_large">
+
+                <!-- Error Count -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/margin_small"
+                    app:cardCornerRadius="@dimen/card_corner_radius"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/surface_container_lowest"
+                    app:strokeColor="@color/outline_variant"
+                    app:strokeWidth="0.5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/padding_large">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ERROR COUNT"
+                            style="@style/Text.Label.Upper"
+                            android:layout_marginBottom="4dp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="bottom">
+
+                            <TextView
+                                android:id="@+id/tv_issue_count"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="12"
+                                android:textSize="@dimen/text_size_title"
+                                android:textStyle="bold"
+                                android:textColor="@color/tertiary_container"
+                                android:fontFamily="serif"
+                                android:layout_marginEnd="@dimen/margin_small" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Critical"
+                                android:textSize="@dimen/text_size_small"
+                                android:textStyle="bold"
+                                android:textColor="@color/on_tertiary_container" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Readability Score -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/margin_small"
+                    app:cardCornerRadius="@dimen/card_corner_radius"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/surface_container_lowest"
+                    app:strokeColor="@color/outline_variant"
+                    app:strokeWidth="0.5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/padding_large">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="READABILITY SCORE"
+                            style="@style/Text.Label.Upper"
+                            android:layout_marginBottom="4dp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="bottom">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="84"
+                                android:textSize="@dimen/text_size_title"
+                                android:textStyle="bold"
+                                android:textColor="@color/primary"
+                                android:fontFamily="serif"
+                                android:layout_marginEnd="@dimen/margin_small" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Advanced"
+                                android:textSize="@dimen/text_size_small"
+                                android:textStyle="bold"
+                                android:textColor="@color/primary_light" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
 
             <!-- Input Card -->
             <com.google.android.material.card.MaterialCardView
@@ -56,7 +283,7 @@ Features:
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="@dimen/card_corner_radius"
                 app:cardElevation="@dimen/card_elevation"
-                app:cardBackgroundColor="@color/card_background"
+                app:cardBackgroundColor="@color/surface_container_lowest"
                 android:layout_marginBottom="@dimen/margin_medium">
 
                 <LinearLayout
@@ -65,17 +292,6 @@ Features:
                     android:orientation="vertical"
                     android:padding="@dimen/padding_medium">
 
-                    <!-- Section Title -->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Text Input"
-                        android:textSize="@dimen/text_size_large"
-                        android:textStyle="bold"
-                        android:textColor="@color/text_primary"
-                        android:layout_marginBottom="@dimen/margin_small" />
-
-                    <!-- Text Input Area with Material Design -->
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -85,6 +301,10 @@ Features:
                         app:counterEnabled="true"
                         app:counterMaxLength="5000"
                         app:endIconMode="clear_text"
+                        app:boxCornerRadiusTopStart="@dimen/card_corner_radius"
+                        app:boxCornerRadiusTopEnd="@dimen/card_corner_radius"
+                        app:boxCornerRadiusBottomStart="@dimen/card_corner_radius"
+                        app:boxCornerRadiusBottomEnd="@dimen/card_corner_radius"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -97,7 +317,7 @@ Features:
                             android:inputType="textMultiLine|textCapSentences"
                             android:scrollbars="vertical"
                             android:textSize="@dimen/text_size_medium"
-                            android:textColor="@color/text_primary"
+                            android:textColor="@color/on_surface"
                             android:text="The quick brown fox jump over the lazy dog. The dog was not amused and choose to ignore the fox."/>
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -115,7 +335,7 @@ Features:
                             android:layout_height="wrap_content"
                             android:text="Language:"
                             android:textSize="@dimen/text_size_medium"
-                            android:textColor="@color/text_secondary"
+                            android:textColor="@color/on_surface_variant"
                             android:layout_marginEnd="@dimen/margin_small" />
 
                         <Spinner
@@ -131,6 +351,14 @@ Features:
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
+
+            <!-- Model Selection -->
+            <include
+                android:id="@+id/model_selector"
+                layout="@layout/layout_model_selector"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_medium" />
 
             <!-- Action Buttons -->
             <LinearLayout
@@ -183,7 +411,7 @@ Features:
                     android:layout_height="wrap_content"
                     android:text="Analyzing grammar and style..."
                     android:textSize="@dimen/text_size_medium"
-                    android:textColor="@color/text_secondary"
+                    android:textColor="@color/on_surface_variant"
                     android:layout_marginTop="@dimen/margin_medium" />
 
             </LinearLayout>
@@ -194,38 +422,122 @@ Features:
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
 
-                <!-- Results Header -->
+                <!-- Corrected Text Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_corrected_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/card_corner_radius"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/surface_container_lowest"
+                    app:strokeColor="@color/outline_variant"
+                    app:strokeWidth="0.5dp"
+                    android:layout_marginBottom="@dimen/margin_medium">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/padding_large">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Corrected Text"
+                            android:textSize="@dimen/text_size_large"
+                            android:textStyle="bold"
+                            android:textColor="@color/primary"
+                            android:fontFamily="serif"
+                            android:layout_marginBottom="8dp"/>
+
+                        <TextView
+                            android:id="@+id/tv_corrected_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Your corrected text will appear here..."
+                            android:textSize="@dimen/text_size_medium"
+                            android:textColor="@color/on_surface"
+                            android:lineSpacingExtra="6dp"/>
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Stats Row -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
+                    android:orientation="vertical"
                     android:layout_marginBottom="@dimen/margin_medium">
 
-                    <TextView
-                        android:layout_width="0dp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Suggestions"
-                        android:textSize="@dimen/text_size_large"
-                        android:textStyle="bold"
-                        android:textColor="@color/text_primary" />
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/bg_stat_card"
+                        android:padding="@dimen/padding_medium"
+                        android:layout_marginBottom="@dimen/margin_small">
 
-                    <!-- Issue Counter Badge -->
-                    <TextView
-                        android:id="@+id/tv_issue_count"
-                        android:layout_width="wrap_content"
+                        <ImageView
+                            android:layout_width="@dimen/icon_small"
+                            android:layout_height="@dimen/icon_small"
+                            android:src="@drawable/ic_check_circle"
+                            android:tint="@color/secondary"
+                            android:layout_marginEnd="@dimen/margin_small" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Passive Voice Detected"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textStyle="bold"
+                            android:textColor="@color/on_surface" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2 instances"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textColor="@color/outline" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="3 Issues Found"
-                        android:textSize="@dimen/text_size_small"
-                        android:textColor="@color/white"
-                        android:background="@drawable/badge_background"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="12dp"
-                        android:paddingTop="4dp"
-                        android:paddingBottom="4dp" />
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/bg_stat_card"
+                        android:padding="@dimen/padding_medium">
+
+                        <ImageView
+                            android:layout_width="@dimen/icon_small"
+                            android:layout_height="@dimen/icon_small"
+                            android:src="@drawable/ic_ai_scan"
+                            android:tint="@color/primary"
+                            android:layout_marginEnd="@dimen/margin_small" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Style Suggestions"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textStyle="bold"
+                            android:textColor="@color/on_surface" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="5 available"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textColor="@color/outline" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -318,7 +630,8 @@ Features:
                     android:text="No results yet"
                     android:textSize="@dimen/text_size_large"
                     android:textStyle="bold"
-                    android:textColor="@color/text_secondary"
+                    android:textColor="@color/on_surface_variant"
+                    android:fontFamily="serif"
                     android:layout_marginBottom="@dimen/margin_small" />
 
                 <TextView

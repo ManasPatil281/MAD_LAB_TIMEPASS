@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+Grammar suggestion item - ScholarHub editorial style
+Tooltip-like card with error type badge, suggestion text, and accept/ignore buttons
+-->
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,7 +11,10 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/margin_small"
     app:cardCornerRadius="@dimen/card_corner_radius"
-    app:cardElevation="2dp">
+    app:cardElevation="0dp"
+    app:cardBackgroundColor="@color/surface_container_lowest"
+    app:strokeColor="@color/outline_variant"
+    app:strokeWidth="0.5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,34 +27,47 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginBottom="4dp">
+            android:layout_marginBottom="@dimen/margin_small">
 
             <TextView
                 android:id="@+id/tv_error_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Grammar"
-                android:textSize="@dimen/text_size_small"
+                android:text="SPELLING ERROR"
+                android:textSize="9sp"
+                android:textAllCaps="true"
                 android:textStyle="bold"
-                android:textColor="@color/error"
-                android:background="#FFEBEE"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:paddingTop="2dp"
-                android:paddingBottom="2dp"
+                android:letterSpacing="0.1"
+                android:textColor="@color/on_tertiary_container"
+                android:background="@drawable/bg_badge_warning"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
                 android:layout_marginEnd="@dimen/margin_small"/>
 
-            <TextView
-                android:id="@+id/tv_suggestion_text"
+            <View
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Consider using 'their' instead of 'there'."
-                android:textSize="@dimen/text_size_normal"
-                android:textColor="@color/text_primary"
-                android:textStyle="bold"/>
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_close"
+                android:tint="@color/outline" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_suggestion_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Consider using 'their' instead of 'there'."
+            android:textSize="@dimen/text_size_normal"
+            android:textStyle="bold"
+            android:textColor="@color/on_surface"
+            android:layout_marginBottom="4dp"/>
 
         <TextView
             android:id="@+id/tv_original_text"
@@ -55,18 +75,38 @@
             android:layout_height="wrap_content"
             android:text="Original: I went to there house."
             android:textSize="@dimen/text_size_small"
-            android:textColor="@color/text_secondary"
-            android:layout_marginTop="4dp"/>
+            android:textColor="@color/on_surface_variant"
+            android:layout_marginBottom="@dimen/margin_small"/>
 
-        <Button
-            android:id="@+id/btn_apply_fix"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Apply Fix"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:textColor="@color/primary"
-            android:padding="0dp"
-            android:layout_gravity="end"/>
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_apply_fix"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="Accept"
+                android:textSize="@dimen/text_size_small"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_button_primary"
+                android:layout_marginEnd="@dimen/margin_small" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="Ignore"
+                android:textSize="@dimen/text_size_small"
+                android:textStyle="bold"
+                android:textColor="@color/on_surface"
+                android:background="@drawable/bg_stat_card"
+                android:layout_marginStart="@dimen/margin_small" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

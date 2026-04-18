@@ -1,21 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+Paraphrasing Tool Screen - ScholarHub
+Editorial input/output with clean card layout
+-->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_secondary"
+    android:background="@color/surface"
     tools:context=".ParaphrasingActivity">
 
-    <!-- App Bar -->
+    <!-- TopAppBar - Frosted Glass -->
+    <FrameLayout
+        android:id="@+id/toolbar_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:elevation="2dp"
+        android:background="@color/surface_container_lowest">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolbar_height"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/padding_medium"
+                android:paddingEnd="@dimen/padding_medium">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_small"
+                    android:layout_height="@dimen/icon_small"
+                    android:src="@drawable/ic_review"
+                    android:tint="@color/primary_container"
+                    android:layout_marginEnd="@dimen/margin_small" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="ScholarHub"
+                    android:textSize="20sp"
+                    android:textStyle="bold|italic"
+                    android:textColor="@color/primary_container"
+                    android:fontFamily="serif" />
+
+                <ImageView
+                    android:layout_width="@dimen/icon_small"
+                    android:layout_height="@dimen/icon_small"
+                    android:src="@drawable/ic_users"
+                    android:tint="@color/primary_container" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/surface_container_high" />
+
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- Hidden toolbar -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/primary"
-        android:elevation="4dp"
-        app:title="Paraphrasing Tool"
-        app:titleTextColor="@color/white"
+        android:layout_height="0dp"
+        android:visibility="gone"
         app:navigationIcon="@drawable/ic_back"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +83,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_container"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -34,7 +93,43 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/padding_medium">
+            android:padding="@dimen/padding_medium"
+            android:paddingBottom="100dp">
+
+            <!-- Editorial Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="@dimen/margin_large">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="WRITING TOOLS"
+                    style="@style/Text.Label.Upper"
+                    android:textColor="@color/primary"
+                    android:layout_marginBottom="@dimen/margin_small" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Paraphrasing Tool"
+                    android:textSize="@dimen/text_size_headline"
+                    android:textStyle="bold"
+                    android:textColor="@color/on_surface"
+                    android:fontFamily="serif"
+                    android:layout_marginBottom="@dimen/margin_small" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Enhance readability and clarity while preserving meaning."
+                    android:textSize="@dimen/text_size_medium"
+                    android:textColor="@color/on_surface_variant"
+                    android:textStyle="italic" />
+
+            </LinearLayout>
 
             <!-- Input Card -->
             <com.google.android.material.card.MaterialCardView
@@ -42,13 +137,14 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="@dimen/card_corner_radius"
                 app:cardElevation="@dimen/card_elevation"
+                app:cardBackgroundColor="@color/surface_container_lowest"
                 android:layout_marginBottom="@dimen/padding_medium">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="@dimen/padding_medium">
+                    android:padding="@dimen/padding_large">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -56,6 +152,8 @@
                         android:text="Original Text"
                         android:textSize="@dimen/text_size_large"
                         android:textStyle="bold"
+                        android:textColor="@color/primary"
+                        android:fontFamily="serif"
                         android:layout_marginBottom="@dimen/margin_small"/>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -63,6 +161,10 @@
                         android:layout_height="wrap_content"
                         android:hint="Enter text to paraphrase..."
                         app:boxStrokeColor="@color/primary"
+                        app:boxCornerRadiusTopStart="@dimen/card_corner_radius"
+                        app:boxCornerRadiusTopEnd="@dimen/card_corner_radius"
+                        app:boxCornerRadiusBottomStart="@dimen/card_corner_radius"
+                        app:boxCornerRadiusBottomEnd="@dimen/card_corner_radius"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -71,13 +173,23 @@
                             android:layout_height="wrap_content"
                             android:minHeight="150dp"
                             android:gravity="top|start"
-                            android:inputType="textMultiLine" />
+                            android:inputType="textMultiLine"
+                            android:textSize="@dimen/text_size_medium"
+                            android:textColor="@color/on_surface" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
+
+            <!-- Model Selection -->
+            <include
+                android:id="@+id/model_selector"
+                layout="@layout/layout_model_selector"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_medium" />
 
             <Button
                 android:id="@+id/btn_paraphrase"
@@ -91,17 +203,21 @@
 
             <!-- Output Card -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_output_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 app:cardCornerRadius="@dimen/card_corner_radius"
-                app:cardElevation="@dimen/card_elevation"
-                app:cardBackgroundColor="@color/white">
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/surface_container_lowest"
+                app:strokeColor="@color/outline_variant"
+                app:strokeWidth="0.5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="@dimen/padding_medium">
+                    android:padding="@dimen/padding_large">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -116,7 +232,9 @@
                             android:layout_weight="1"
                             android:text="Paraphrased Version"
                             android:textSize="@dimen/text_size_large"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold"
+                            android:textColor="@color/primary"
+                            android:fontFamily="serif"/>
 
                         <ImageView
                             android:id="@+id/iv_copy"
@@ -135,7 +253,8 @@
                         android:layout_height="wrap_content"
                         android:text="Paraphrased text will appear here..."
                         android:textSize="@dimen/text_size_medium"
-                        android:lineSpacingExtra="4dp"
+                        android:textColor="@color/on_surface"
+                        android:lineSpacingExtra="6dp"
                         android:minHeight="100dp"/>
 
                 </LinearLayout>

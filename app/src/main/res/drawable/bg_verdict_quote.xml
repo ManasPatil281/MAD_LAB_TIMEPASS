@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Verdict/blockquote left border accent -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#F2F4F7" />
+            <corners android:radius="12dp" />
+        </shape>
+    </item>
+    <item android:left="0dp" android:right="0dp" android:top="0dp" android:bottom="0dp">
+        <inset android:insetLeft="0dp">
+            <shape android:shape="rectangle">
+                <solid android:color="#E87575" />
+                <size android:width="4dp" />
+                <corners android:topLeftRadius="12dp" android:bottomLeftRadius="12dp" />
+            </shape>
+        </inset>
+    </item>
+</layer-list>

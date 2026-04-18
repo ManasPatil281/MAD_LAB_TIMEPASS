@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Home Dashboard Screen - ScholarMate
-Modern dashboard with feature cards in grid layout
+Home Dashboard Screen - ScholarHub
+Editorial design with frosted header, bento stats, horizontal tool scroll, and recent manuscripts
 -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -9,17 +9,76 @@ Modern dashboard with feature cards in grid layout
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_secondary">
+    android:background="@color/surface">
 
-    <!-- App Bar with User Profile -->
+    <!-- TopAppBar - Frosted Glass Style -->
+    <FrameLayout
+        android:id="@+id/toolbar_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:elevation="2dp"
+        android:background="@color/surface_container_lowest">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolbar_height"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/padding_medium"
+                android:paddingEnd="@dimen/padding_medium">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_small"
+                    android:layout_height="@dimen/icon_small"
+                    android:src="@drawable/ic_review"
+                    android:tint="@color/primary_container"
+                    android:layout_marginEnd="@dimen/margin_small" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="ScholarHub"
+                    android:textSize="20sp"
+                    android:textStyle="bold|italic"
+                    android:textColor="@color/primary_container"
+                    android:fontFamily="serif" />
+
+                <ImageView
+                    android:id="@+id/iv_profile"
+                    android:layout_width="@dimen/icon_small"
+                    android:layout_height="@dimen/icon_small"
+                    android:src="@drawable/ic_users"
+                    android:tint="@color/primary_container"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+            </LinearLayout>
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/surface_container_high" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <!-- Hidden toolbar for menu support -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/primary"
-        android:elevation="4dp"
-        app:title="ScholarMate"
-        app:titleTextColor="@color/white"
+        android:layout_height="0dp"
+        android:visibility="gone"
         app:menu="@menu/menu_home"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +89,8 @@ Modern dashboard with feature cards in grid layout
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_container"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -39,373 +99,497 @@ Modern dashboard with feature cards in grid layout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/padding_medium">
+            android:paddingBottom="100dp">
 
-            <!-- Welcome Header Card -->
-            <com.google.android.material.card.MaterialCardView
+            <!-- Welcome Hero Section -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="@dimen/card_corner_radius"
-                app:cardElevation="@dimen/card_elevation"
-                app:cardBackgroundColor="@drawable/gradient_card"
-                android:layout_marginBottom="@dimen/margin_large">
+                android:orientation="vertical"
+                android:paddingStart="@dimen/padding_medium"
+                android:paddingEnd="@dimen/padding_medium"
+                android:paddingTop="@dimen/padding_large"
+                android:paddingBottom="@dimen/padding_medium">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="@dimen/padding_large">
+                    android:text="THE MODERN ARCHIVIST"
+                    style="@style/Text.Label.Upper"
+                    android:layout_marginBottom="4dp" />
 
-                    <TextView
-                        android:id="@+id/tv_welcome"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Welcome back, Scholar!"
-                        android:textSize="@dimen/text_size_xlarge"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:layout_marginBottom="@dimen/margin_small" />
+                <TextView
+                    android:id="@+id/tv_welcome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Welcome back, Scholar."
+                    android:textSize="@dimen/text_size_headline"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary"
+                    android:fontFamily="serif" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Choose a tool to enhance your research"
-                        android:textSize="@dimen/text_size_medium"
-                        android:textColor="@color/white"
-                        android:alpha="0.9" />
+            </LinearLayout>
 
-                </LinearLayout>
+            <!-- Stats Bento Grid -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/padding_medium"
+                android:paddingEnd="@dimen/padding_medium"
+                android:layout_marginBottom="@dimen/section_spacing">
 
-            </com.google.android.material.card.MaterialCardView>
+                <!-- Total Papers Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/margin_small"
+                    app:cardCornerRadius="@dimen/card_corner_radius"
+                    app:cardElevation="@dimen/card_elevation"
+                    app:cardBackgroundColor="@color/surface_container_lowest">
 
-            <!-- Section Title -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="@dimen/padding_large"
+                        android:gravity="bottom">
+
+                        <ImageView
+                            android:layout_width="@dimen/icon_small"
+                            android:layout_height="@dimen/icon_small"
+                            android:src="@drawable/ic_document"
+                            android:tint="@color/primary"
+                            android:layout_marginBottom="@dimen/margin_medium" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="TOTAL PAPERS"
+                            style="@style/Text.Label.Upper"
+                            android:textColor="@color/outline"
+                            android:layout_marginBottom="4dp" />
+
+                        <TextView
+                            android:id="@+id/tv_total_papers"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="@dimen/text_size_title"
+                            android:textStyle="bold"
+                            android:textColor="@color/primary"
+                            android:fontFamily="serif" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Readability Card with gradient -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/margin_small"
+                    app:cardCornerRadius="@dimen/card_corner_radius"
+                    app:cardElevation="@dimen/card_elevation">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:background="@drawable/gradient_card"
+                        android:padding="@dimen/padding_large"
+                        android:gravity="bottom">
+
+                        <ImageView
+                            android:layout_width="@dimen/icon_small"
+                            android:layout_height="@dimen/icon_small"
+                            android:src="@drawable/ic_ai_detection"
+                            android:tint="@color/primary_fixed_dim"
+                            android:layout_marginBottom="@dimen/margin_medium" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ACCOUNT STATUS"
+                            android:textSize="@dimen/text_size_tiny"
+                            android:textAllCaps="true"
+                            android:textStyle="bold"
+                            android:letterSpacing="0.15"
+                            android:textColor="@color/white"
+                            android:alpha="0.8"
+                            android:layout_marginBottom="4dp" />
+
+                        <TextView
+                            android:id="@+id/tv_readability"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Active"
+                            android:textSize="@dimen/text_size_title"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"
+                            android:fontFamily="serif" />
+
+                        <TextView
+                            android:id="@+id/tv_readability_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Scholar Account"
+                            android:textSize="@dimen/text_size_tiny"
+                            android:textColor="@color/white" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+            <!-- Section Title: Scholarly Tools -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="AI Tools"
-                android:textSize="@dimen/text_size_large"
+                android:text="Scholarly Tools"
+                android:textSize="@dimen/text_size_xlarge"
                 android:textStyle="bold"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/on_surface"
+                android:fontFamily="serif"
+                android:paddingStart="@dimen/padding_medium"
+                android:paddingEnd="@dimen/padding_medium"
                 android:layout_marginBottom="@dimen/margin_medium" />
 
-            <!-- Features Grid - Row 1 -->
+            <!-- Tools Horizontal Scroll -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                android:clipToPadding="false"
+                android:layout_marginBottom="@dimen/section_spacing">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/padding_medium"
+                    android:paddingEnd="@dimen/padding_medium">
+
+                    <!-- AI Detection -->
+                    <FrameLayout
+                        android:id="@+id/card_ai_detection"
+                        android:layout_width="112dp"
+                        android:layout_height="112dp"
+                        android:layout_marginEnd="@dimen/margin_medium"
+                        android:background="@drawable/bg_tool_card"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:padding="@dimen/padding_small">
+
+                            <ImageView
+                                android:layout_width="@dimen/icon_small"
+                                android:layout_height="@dimen/icon_small"
+                                android:src="@drawable/ic_ai_detection"
+                                android:tint="@color/primary"
+                                android:layout_marginBottom="@dimen/margin_small" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="AI Detection"
+                                android:textSize="11sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/primary"
+                                android:textAlignment="center" />
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+                    <!-- Grammar Check -->
+                    <FrameLayout
+                        android:id="@+id/card_grammar_check"
+                        android:layout_width="112dp"
+                        android:layout_height="112dp"
+                        android:layout_marginEnd="@dimen/margin_medium"
+                        android:background="@drawable/bg_tool_card"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:padding="@dimen/padding_small">
+
+                            <ImageView
+                                android:layout_width="@dimen/icon_small"
+                                android:layout_height="@dimen/icon_small"
+                                android:src="@drawable/ic_grammar"
+                                android:tint="@color/primary"
+                                android:layout_marginBottom="@dimen/margin_small" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Grammar Check"
+                                android:textSize="11sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/primary"
+                                android:textAlignment="center" />
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+                    <!-- Summarizer -->
+                    <FrameLayout
+                        android:id="@+id/card_summarize"
+                        android:layout_width="112dp"
+                        android:layout_height="112dp"
+                        android:layout_marginEnd="@dimen/margin_medium"
+                        android:background="@drawable/bg_tool_card"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:padding="@dimen/padding_small">
+
+                            <ImageView
+                                android:layout_width="@dimen/icon_small"
+                                android:layout_height="@dimen/icon_small"
+                                android:src="@drawable/ic_summarize"
+                                android:tint="@color/primary"
+                                android:layout_marginBottom="@dimen/margin_small" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Summarizer"
+                                android:textSize="11sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/primary"
+                                android:textAlignment="center" />
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+                    <!-- Plagiarism -->
+                    <FrameLayout
+                        android:id="@+id/card_plagiarism"
+                        android:layout_width="112dp"
+                        android:layout_height="112dp"
+                        android:layout_marginEnd="@dimen/margin_medium"
+                        android:background="@drawable/bg_tool_card"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:padding="@dimen/padding_small">
+
+                            <ImageView
+                                android:layout_width="@dimen/icon_small"
+                                android:layout_height="@dimen/icon_small"
+                                android:src="@drawable/ic_plagiarism"
+                                android:tint="@color/primary"
+                                android:layout_marginBottom="@dimen/margin_small" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Plagiarism"
+                                android:textSize="11sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/primary"
+                                android:textAlignment="center" />
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+                    <!-- Peer Review -->
+                    <FrameLayout
+                        android:id="@+id/card_paper_review"
+                        android:layout_width="112dp"
+                        android:layout_height="112dp"
+                        android:layout_marginEnd="@dimen/margin_medium"
+                        android:background="@drawable/bg_tool_card"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:padding="@dimen/padding_small">
+
+                            <ImageView
+                                android:layout_width="@dimen/icon_small"
+                                android:layout_height="@dimen/icon_small"
+                                android:src="@drawable/ic_review"
+                                android:tint="@color/primary"
+                                android:layout_marginBottom="@dimen/margin_small" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Peer Review"
+                                android:textSize="11sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/primary"
+                                android:textAlignment="center" />
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+                    <!-- Paraphrase -->
+                    <FrameLayout
+                        android:id="@+id/card_paraphrase"
+                        android:layout_width="112dp"
+                        android:layout_height="112dp"
+                        android:layout_marginEnd="@dimen/margin_medium"
+                        android:background="@drawable/bg_tool_card"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:padding="@dimen/padding_small">
+
+                            <ImageView
+                                android:layout_width="@dimen/icon_small"
+                                android:layout_height="@dimen/icon_small"
+                                android:src="@drawable/ic_paraphrase"
+                                android:tint="@color/primary"
+                                android:layout_marginBottom="@dimen/margin_small" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Paraphrase"
+                                android:textSize="11sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/primary"
+                                android:textAlignment="center" />
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+                    <!-- Gestures -->
+                    <FrameLayout
+                        android:id="@+id/card_gestures"
+                        android:layout_width="112dp"
+                        android:layout_height="112dp"
+                        android:background="@drawable/bg_tool_card"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:padding="@dimen/padding_small">
+
+                            <ImageView
+                                android:layout_width="@dimen/icon_small"
+                                android:layout_height="@dimen/icon_small"
+                                android:src="@drawable/ic_gestures"
+                                android:tint="@color/primary"
+                                android:layout_marginBottom="@dimen/margin_small" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Gestures"
+                                android:textSize="11sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/primary"
+                                android:textAlignment="center" />
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <!-- Recent Manuscripts Section -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="@dimen/margin_medium">
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/padding_medium"
+                android:paddingEnd="@dimen/padding_medium"
+                android:layout_marginBottom="@dimen/margin_large">
 
-                <!-- AI Content Detection Card -->
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/card_ai_detection"
+                <TextView
                     android:layout_width="0dp"
-                    android:layout_height="160dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginEnd="@dimen/margin_small"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground"
-                    app:cardCornerRadius="@dimen/card_corner_radius"
-                    app:cardElevation="@dimen/card_elevation">
+                    android:text="Recent Submissions"
+                    android:textSize="@dimen/text_size_xlarge"
+                    android:textStyle="bold"
+                    android:textColor="@color/on_surface"
+                    android:fontFamily="serif" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:padding="@dimen/padding_medium"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="@dimen/icon_medium"
-                            android:layout_height="@dimen/icon_medium"
-                            android:src="@drawable/ic_ai_detection"
-                            android:tint="@color/primary"
-                            android:layout_marginBottom="@dimen/margin_small" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="AI Content\nDetection"
-                            android:textSize="@dimen/text_size_medium"
-                            android:textStyle="bold"
-                            android:textColor="@color/text_primary"
-                            android:textAlignment="center"
-                            android:layout_marginBottom="4dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Detect AI text"
-                            android:textSize="@dimen/text_size_small"
-                            android:textColor="@color/text_secondary"
-                            android:textAlignment="center" />
-
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <!-- Grammar Check Card -->
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/card_grammar_check"
-                    android:layout_width="0dp"
-                    android:layout_height="160dp"
-                    android:layout_weight="1"
-                    android:layout_marginStart="@dimen/margin_small"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground"
-                    app:cardCornerRadius="@dimen/card_corner_radius"
-                    app:cardElevation="@dimen/card_elevation">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:padding="@dimen/padding_medium"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="@dimen/icon_medium"
-                            android:layout_height="@dimen/icon_medium"
-                            android:src="@drawable/ic_grammar"
-                            android:tint="@color/success"
-                            android:layout_marginBottom="@dimen/margin_small" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Grammar\nCheck"
-                            android:textSize="@dimen/text_size_medium"
-                            android:textStyle="bold"
-                            android:textColor="@color/text_primary"
-                            android:textAlignment="center"
-                            android:layout_marginBottom="4dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Fix errors"
-                            android:textSize="@dimen/text_size_small"
-                            android:textColor="@color/text_secondary"
-                            android:textAlignment="center" />
-
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View Archive"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary" />
 
             </LinearLayout>
 
-            <!-- Features Grid - Row 2 -->
+            <!-- Recent Manuscript Items Container -->
             <LinearLayout
+                android:id="@+id/ll_recent_submissions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="@dimen/margin_medium">
-
-                <!-- Plagiarism Detection Card -->
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/card_plagiarism"
-                    android:layout_width="0dp"
-                    android:layout_height="160dp"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="@dimen/margin_small"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground"
-                    app:cardCornerRadius="@dimen/card_corner_radius"
-                    app:cardElevation="@dimen/card_elevation">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:padding="@dimen/padding_medium"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="@dimen/icon_medium"
-                            android:layout_height="@dimen/icon_medium"
-                            android:src="@drawable/ic_plagiarism"
-                            android:tint="@color/error"
-                            android:layout_marginBottom="@dimen/margin_small" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Plagiarism\nDetection"
-                            android:textSize="@dimen/text_size_medium"
-                            android:textStyle="bold"
-                            android:textColor="@color/text_primary"
-                            android:textAlignment="center"
-                            android:layout_marginBottom="4dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Check originality"
-                            android:textSize="@dimen/text_size_small"
-                            android:textColor="@color/text_secondary"
-                            android:textAlignment="center" />
-
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <!-- Paraphrasing Card -->
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/card_paraphrase"
-                    android:layout_width="0dp"
-                    android:layout_height="160dp"
-                    android:layout_weight="1"
-                    android:layout_marginStart="@dimen/margin_small"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground"
-                    app:cardCornerRadius="@dimen/card_corner_radius"
-                    app:cardElevation="@dimen/card_elevation">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:padding="@dimen/padding_medium"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="@dimen/icon_medium"
-                            android:layout_height="@dimen/icon_medium"
-                            android:src="@drawable/ic_paraphrase"
-                            android:tint="@color/accent"
-                            android:layout_marginBottom="@dimen/margin_small" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Paraphrasing"
-                            android:textSize="@dimen/text_size_medium"
-                            android:textStyle="bold"
-                            android:textColor="@color/text_primary"
-                            android:textAlignment="center"
-                            android:layout_marginBottom="4dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Rewrite text"
-                            android:textSize="@dimen/text_size_small"
-                            android:textColor="@color/text_secondary"
-                            android:textAlignment="center" />
-
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-            </LinearLayout>
-
-            <!-- Features Grid - Row 3 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="@dimen/margin_medium">
-
-                <!-- Summarization Card -->
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/card_summarize"
-                    android:layout_width="0dp"
-                    android:layout_height="160dp"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="@dimen/margin_small"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground"
-                    app:cardCornerRadius="@dimen/card_corner_radius"
-                    app:cardElevation="@dimen/card_elevation">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:padding="@dimen/padding_medium"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="@dimen/icon_medium"
-                            android:layout_height="@dimen/icon_medium"
-                            android:src="@drawable/ic_summarize"
-                            android:tint="@color/info"
-                            android:layout_marginBottom="@dimen/margin_small" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Text\nSummarization"
-                            android:textSize="@dimen/text_size_medium"
-                            android:textStyle="bold"
-                            android:textColor="@color/text_primary"
-                            android:textAlignment="center"
-                            android:layout_marginBottom="4dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Create summaries"
-                            android:textSize="@dimen/text_size_small"
-                            android:textColor="@color/text_secondary"
-                            android:textAlignment="center" />
-
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <!-- Paper Reviewer Card -->
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/card_paper_review"
-                    android:layout_width="0dp"
-                    android:layout_height="160dp"
-                    android:layout_weight="1"
-                    android:layout_marginStart="@dimen/margin_small"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground"
-                    app:cardCornerRadius="@dimen/card_corner_radius"
-                    app:cardElevation="@dimen/card_elevation">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:padding="@dimen/padding_medium"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="@dimen/icon_medium"
-                            android:layout_height="@dimen/icon_medium"
-                            android:src="@drawable/ic_review"
-                            android:tint="@color/warning"
-                            android:layout_marginBottom="@dimen/margin_small" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Paper\nReviewer"
-                            android:textSize="@dimen/text_size_medium"
-                            android:textStyle="bold"
-                            android:textColor="@color/text_primary"
-                            android:textAlignment="center"
-                            android:layout_marginBottom="4dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Review papers"
-                            android:textSize="@dimen/text_size_small"
-                            android:textColor="@color/text_secondary"
-                            android:textAlignment="center" />
-
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
+                android:orientation="vertical"
+                android:paddingStart="@dimen/padding_medium"
+                android:paddingEnd="@dimen/padding_medium">
+                
+                <TextView
+                    android:id="@+id/tv_no_submissions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Loading submissions..."
+                    android:textAlignment="center"
+                    android:textColor="@color/outline"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp" />
 
             </LinearLayout>
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-AI Content Detection Screen - ScholarMate
-Enhanced UI with confidence visualization and detailed results
+AI Content Detection Screen - ScholarHub
+Integrity Scanner with editorial design, glassmorphism results, and probability meters
 -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -9,18 +9,72 @@ Enhanced UI with confidence visualization and detailed results
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_secondary"
+    android:background="@color/surface"
     tools:context=".AiContentDetectionActivity">
 
-    <!-- App Bar -->
+    <!-- TopAppBar - Frosted Glass -->
+    <FrameLayout
+        android:id="@+id/toolbar_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:elevation="2dp"
+        android:background="@color/surface_container_lowest">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolbar_height"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/padding_medium"
+                android:paddingEnd="@dimen/padding_medium">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_small"
+                    android:layout_height="@dimen/icon_small"
+                    android:src="@drawable/ic_review"
+                    android:tint="@color/primary_container"
+                    android:layout_marginEnd="@dimen/margin_small" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="ScholarHub"
+                    android:textSize="20sp"
+                    android:textStyle="bold|italic"
+                    android:textColor="@color/primary_container"
+                    android:fontFamily="serif" />
+
+                <ImageView
+                    android:layout_width="@dimen/icon_small"
+                    android:layout_height="@dimen/icon_small"
+                    android:src="@drawable/ic_users"
+                    android:tint="@color/primary_container" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/surface_container_high" />
+
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- Hidden toolbar for navigation -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/primary"
-        android:elevation="4dp"
-        app:title="AI Content Detection"
-        app:titleTextColor="@color/white"
+        android:layout_height="0dp"
+        android:visibility="gone"
         app:navigationIcon="@drawable/ic_back"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +85,8 @@ Enhanced UI with confidence visualization and detailed results
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_container"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -40,7 +95,42 @@ Enhanced UI with confidence visualization and detailed results
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/padding_medium">
+            android:padding="@dimen/padding_medium"
+            android:paddingBottom="100dp">
+
+            <!-- Editorial Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="@dimen/margin_large">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DETECTION TOOLS"
+                    style="@style/Text.Label.Upper"
+                    android:layout_marginBottom="@dimen/margin_small" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Integrity Scanner"
+                    android:textSize="@dimen/text_size_headline"
+                    android:textStyle="bold"
+                    android:textColor="@color/on_surface"
+                    android:fontFamily="serif"
+                    android:layout_marginBottom="@dimen/margin_medium" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Leverage our advanced neural network analysis to determine the provenance of academic writing."
+                    android:textSize="@dimen/text_size_medium"
+                    android:textColor="@color/on_surface_variant"
+                    android:lineSpacingExtra="4dp" />
+
+            </LinearLayout>
 
             <!-- Input Card -->
             <com.google.android.material.card.MaterialCardView
@@ -48,43 +138,76 @@ Enhanced UI with confidence visualization and detailed results
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="@dimen/card_corner_radius"
                 app:cardElevation="@dimen/card_elevation"
+                app:cardBackgroundColor="@color/surface_container_lowest"
                 android:layout_marginBottom="@dimen/margin_medium">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="@dimen/padding_medium">
+                    android:padding="@dimen/padding_large">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Text Input"
-                        android:textSize="@dimen/text_size_large"
-                        android:textStyle="bold"
-                        android:textColor="@color/text_primary"
-                        android:layout_marginBottom="@dimen/margin_small" />
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/margin_medium">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Manuscript Content"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textStyle="bold"
+                            android:textColor="@color/primary" />
+
+                        <Button
+                            android:id="@+id/btn_upload_pdf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:text="Upload PDF"
+                            android:textSize="12sp"
+                            android:textAllCaps="false"
+                            android:textStyle="bold"
+                            android:textColor="@color/primary"
+                            android:background="@drawable/bg_chip_pill"
+                            android:drawableStart="@drawable/ic_upload"
+                            android:drawablePadding="4dp"
+                            android:paddingStart="12dp"
+                            android:paddingEnd="12dp" />
+
+                    </LinearLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Enter text or upload a PDF to analyze..."
                         app:boxStrokeColor="@color/primary"
                         app:counterEnabled="true"
                         app:counterMaxLength="10000"
                         app:endIconMode="clear_text"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                        app:boxCornerRadiusTopStart="@dimen/card_corner_radius"
+                        app:boxCornerRadiusTopEnd="@dimen/card_corner_radius"
+                        app:boxCornerRadiusBottomStart="@dimen/card_corner_radius"
+                        app:boxCornerRadiusBottomEnd="@dimen/card_corner_radius"
+                        app:boxBackgroundColor="@color/surface_container_low"
+                        app:boxBackgroundMode="filled"
+                        app:hintEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_text_input"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="wrap_content"
+                            android:hint="Paste your text here for deep analysis..."
                             android:gravity="top|start"
                             android:inputType="textMultiLine"
                             android:maxLength="10000"
                             android:minHeight="180dp"
                             android:scrollbars="vertical"
-                            android:textSize="@dimen/text_size_medium" />
+                            android:textSize="@dimen/text_size_medium"
+                            android:textColor="@color/on_surface"
+                            android:textColorHint="@color/outline" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -92,36 +215,24 @@ Enhanced UI with confidence visualization and detailed results
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Action Buttons -->
-            <LinearLayout
+            <!-- Model Selection -->
+            <include
+                android:id="@+id/model_selector"
+                layout="@layout/layout_model_selector"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/margin_medium"
-                android:orientation="horizontal">
+                android:layout_marginBottom="@dimen/margin_medium" />
 
-                <Button
-                    android:id="@+id/btn_upload_pdf"
-                    style="@style/Button.Secondary"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/margin_small"
-                    android:layout_weight="1"
-                    android:drawableStart="@drawable/ic_pdf"
-                    android:drawablePadding="@dimen/padding_small"
-                    android:text="Upload PDF" />
-
-                <Button
-                    android:id="@+id/btn_detect_ai"
-                    style="@style/Button.Primary"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_small"
-                    android:layout_weight="1"
-                    android:drawableStart="@drawable/ic_ai_scan"
-                    android:drawablePadding="@dimen/padding_small"
-                    android:text="Detect AI" />
-
-            </LinearLayout>
+            <!-- Action Button - Gradient -->
+            <Button
+                android:id="@+id/btn_detect_ai"
+                style="@style/Button.Primary"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height"
+                android:text="Check for AI"
+                android:drawableStart="@drawable/ic_ai_scan"
+                android:drawablePadding="@dimen/padding_small"
+                android:layout_marginBottom="@dimen/section_spacing" />
 
             <!-- Analysis Progress -->
             <LinearLayout
@@ -143,16 +254,8 @@ Enhanced UI with confidence visualization and detailed results
                     android:layout_height="wrap_content"
                     android:text="Analyzing content with AI..."
                     android:textSize="@dimen/text_size_medium"
-                    android:textColor="@color/text_secondary"
+                    android:textColor="@color/on_surface_variant"
                     android:layout_marginTop="@dimen/margin_medium" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="This may take a few moments"
-                    android:textSize="@dimen/text_size_small"
-                    android:textColor="@color/text_hint"
-                    android:layout_marginTop="@dimen/margin_small" />
 
             </LinearLayout>
 
@@ -162,14 +265,17 @@ Enhanced UI with confidence visualization and detailed results
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
 
-                <!-- Result Card -->
+                <!-- Analysis Report Card -->
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="@dimen/card_corner_radius"
-                    app:cardElevation="@dimen/card_elevation"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/surface_container_lowest"
+                    app:strokeColor="@color/outline_variant"
+                    app:strokeWidth="0.5dp"
                     android:layout_marginBottom="@dimen/margin_medium">
 
                     <LinearLayout
@@ -178,111 +284,231 @@ Enhanced UI with confidence visualization and detailed results
                         android:orientation="vertical"
                         android:padding="@dimen/padding_large">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Detection Result"
-                            android:textSize="@dimen/text_size_large"
-                            android:textStyle="bold"
-                            android:textColor="@color/text_primary"
-                            android:layout_marginBottom="@dimen/margin_medium" />
-
-                        <!-- Result Status with Icon -->
-
-                        <!-- Confidence Score Section -->
+                        <!-- Header with Badge -->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/margin_medium"
-                            android:background="@drawable/bg_result_container"
-                            android:gravity="center_vertical"
                             android:orientation="horizontal"
-                            android:padding="@dimen/padding_medium">
-
-                            <ImageView
-                                android:id="@+id/iv_result_icon"
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
-                                android:layout_marginEnd="@dimen/margin_medium"
-                                android:src="@drawable/ic_ai_positive" />
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="@dimen/margin_large">
 
                             <TextView
-                                android:id="@+id/tv_result"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Likely AI-Generated Content"
-                                android:textColor="@color/text_primary"
-                                android:textSize="@dimen/text_size_large"
+                                android:text="Analysis Report"
+                                android:textSize="@dimen/text_size_xlarge"
                                 android:textStyle="bold"
-                                tools:ignore="HardcodedText" />
+                                android:textColor="@color/on_surface"
+                                android:fontFamily="serif" />
+
+                            <TextView
+                                android:id="@+id/tv_result"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="AI DETECTED"
+                                android:textSize="9sp"
+                                android:textAllCaps="true"
+                                android:textStyle="bold"
+                                android:letterSpacing="0.1"
+                                android:textColor="@color/on_tertiary_container"
+                                android:background="@drawable/bg_badge_warning"
+                                android:paddingStart="12dp"
+                                android:paddingEnd="12dp"
+                                android:paddingTop="6dp"
+                                android:paddingBottom="6dp" />
 
                         </LinearLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Confidence Score"
-                            android:textSize="@dimen/text_size_medium"
-                            android:textStyle="bold"
-                            android:textColor="@color/text_secondary"
-                            android:layout_marginBottom="@dimen/margin_small" />
-
-                        <!-- Circular Progress Indicator -->
+                        <!-- AI Probability Meter -->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical"
+                            android:orientation="vertical"
                             android:layout_marginBottom="@dimen/margin_medium">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical"
+                                android:layout_marginBottom="@dimen/margin_small">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="AI PROBABILITY"
+                                    style="@style/Text.Label.Upper" />
+
+                                <TextView
+                                    android:id="@+id/tv_confidence_score"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="84%"
+                                    android:textSize="@dimen/text_size_title"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/on_tertiary_container"
+                                    android:fontFamily="serif"
+                                    tools:ignore="HardcodedText" />
+
+                            </LinearLayout>
 
                             <ProgressBar
                                 android:id="@+id/progress_confidence"
                                 style="?android:attr/progressBarStyleHorizontal"
-                                android:layout_width="0dp"
-                                android:layout_height="8dp"
-                                android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="12dp"
                                 android:max="100"
-                                android:progress="92"
-                                android:progressDrawable="@drawable/progress_gradient"
-                                android:layout_marginEnd="@dimen/margin_medium" />
-
-                            <TextView
-                                android:id="@+id/tv_confidence_score"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="92%"
-                                android:textSize="@dimen/text_size_xlarge"
-                                android:textStyle="bold"
-                                android:textColor="@color/primary"
-                                tools:ignore="HardcodedText" />
+                                android:progress="84"
+                                android:progressDrawable="@drawable/progress_plagiarism" />
 
                         </LinearLayout>
 
-                        <!-- Detailed Analysis -->
+                        <!-- Human Probability Meter -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginBottom="@dimen/margin_large">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical"
+                                android:layout_marginBottom="@dimen/margin_small">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="HUMAN PROBABILITY"
+                                    style="@style/Text.Label.Upper" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="16%"
+                                    android:textSize="@dimen/text_size_title"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/secondary"
+                                    android:fontFamily="serif" />
+
+                            </LinearLayout>
+
+                            <ProgressBar
+                                style="?android:attr/progressBarStyleHorizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="12dp"
+                                android:max="100"
+                                android:progress="16"
+                                android:progressDrawable="@drawable/progress_gradient" />
+
+                        </LinearLayout>
+
+                        <!-- Verdict Quote -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:background="@drawable/bg_verdict_quote"
+                            android:padding="@dimen/padding_large"
+                            android:layout_marginBottom="@dimen/margin_large">
+
+                            <TextView
+                                android:id="@+id/tv_analysis_details"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="&quot;The structural rhythm and repetitive linguistic markers suggest a high degree of generative automation. The text lacks the characteristic non-linear syntactic patterns typically found in scholarly human prose.&quot;"
+                                android:textSize="@dimen/text_size_medium"
+                                android:textColor="@color/on_surface"
+                                android:textStyle="italic"
+                                android:lineSpacingExtra="4dp"
+                                android:layout_marginBottom="@dimen/margin_medium"
+                                tools:ignore="HardcodedText" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="— SCANNER VERDICT"
+                                style="@style/Text.Label.Upper"
+                                android:textColor="@color/on_surface_variant" />
+
+                        </LinearLayout>
+
+                        <!-- Flagged Passages -->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Analysis Details"
-                            android:textSize="@dimen/text_size_medium"
-                            android:textStyle="bold"
-                            android:textColor="@color/text_secondary"
-                            android:layout_marginTop="@dimen/margin_medium"
-                            android:layout_marginBottom="@dimen/margin_small" />
+                            android:text="FLAGGED PASSAGES"
+                            style="@style/Text.Label.Upper"
+                            android:layout_marginBottom="@dimen/margin_medium" />
 
-                        <TextView
-                            android:id="@+id/tv_analysis_details"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="The analysis indicates a high probability of AI-generated content. The text exhibits unusually consistent sentence length, low perplexity, and a lack of personal or idiomatic expressions. These are strong indicators of machine-generated text."
-                            android:textSize="@dimen/text_size_normal"
-                            android:textColor="@color/text_primary"
-                            android:lineSpacingExtra="4dp"
-                            tools:ignore="HardcodedText" />
+                            android:orientation="vertical"
+                            android:background="@color/surface_container_lowest"
+                            android:padding="@dimen/padding_large">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="In the realm of academic pursuit, it is essential to leverage synergistic paradigms to facilitate holistic learning. This methodology ensures that students are engaging with multifaceted dimensions of scholarly discourse."
+                                android:textSize="@dimen/text_size_medium"
+                                android:textColor="@color/on_surface"
+                                android:lineSpacingExtra="6dp" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>
+
+                <!-- Human Nuance Tip -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@drawable/bg_tip_box"
+                    android:padding="@dimen/padding_large"
+                    android:layout_marginBottom="@dimen/margin_medium">
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_small"
+                        android:layout_height="@dimen/icon_small"
+                        android:src="@drawable/ic_check_circle"
+                        android:tint="@color/secondary"
+                        android:layout_marginEnd="@dimen/margin_medium"
+                        android:layout_marginTop="2dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Human Nuance Tip"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textStyle="bold"
+                            android:textColor="@color/secondary"
+                            android:layout_marginBottom="4dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="To reduce AI signaling, incorporate more personal anecdotes, varied sentence lengths, and specific contextual references unique to your research environment."
+                            android:textSize="@dimen/text_size_normal"
+                            android:textColor="@color/on_surface_variant"
+                            android:lineSpacingExtra="4dp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
                 <!-- Action Buttons -->
                 <LinearLayout
@@ -338,7 +564,8 @@ Enhanced UI with confidence visualization and detailed results
                     android:text="No analysis yet"
                     android:textSize="@dimen/text_size_large"
                     android:textStyle="bold"
-                    android:textColor="@color/text_secondary"
+                    android:textColor="@color/on_surface_variant"
+                    android:fontFamily="serif"
                     android:layout_marginTop="@dimen/margin_medium"
                     android:layout_marginBottom="@dimen/margin_small" />
 

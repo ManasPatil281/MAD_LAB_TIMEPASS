@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Signup Activity Layout
-- Premium gradient background
-- Glassmorphism effect card
+Signup Activity Layout - ScholarHub
+Editorial signup with gradient background and premium card
+Updated to match users table schema: full_name, email, password, role, institution
 -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -29,27 +29,28 @@ Signup Activity Layout
                 android:layout_height="wrap_content"
                 android:text="Create Account"
                 android:textColor="@color/white"
-                android:textSize="32sp"
-                android:textStyle="bold"
+                android:textSize="28sp"
+                android:textStyle="bold|italic"
+                android:fontFamily="serif"
                 android:layout_marginBottom="8dp"
-                android:layout_marginTop="48dp" />
+                android:layout_marginTop="32dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Join ScholarMate today"
+                android:text="Join ScholarHub today"
                 android:textColor="@color/white"
                 android:alpha="0.8"
-                android:textSize="16sp"
-                android:layout_marginBottom="32dp" />
+                android:textSize="14sp"
+                android:layout_marginBottom="24dp" />
 
             <!-- Signup Form Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="20dp"
+                app:cardCornerRadius="16dp"
                 app:cardElevation="8dp"
-                app:cardBackgroundColor="@color/white">
+                app:cardBackgroundColor="@color/surface_container_lowest">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -57,13 +58,18 @@ Signup Activity Layout
                     android:orientation="vertical"
                     android:padding="24dp">
 
+                    <!-- Full Name -->
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Full Name"
                         app:startIconDrawable="@drawable/ic_users"
+                        app:boxCornerRadiusTopStart="@dimen/card_corner_radius"
+                        app:boxCornerRadiusTopEnd="@dimen/card_corner_radius"
+                        app:boxCornerRadiusBottomStart="@dimen/card_corner_radius"
+                        app:boxCornerRadiusBottomEnd="@dimen/card_corner_radius"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_marginBottom="16dp">
+                        android:layout_marginBottom="14dp">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_name"
@@ -73,13 +79,18 @@ Signup Activity Layout
 
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <!-- Email Address -->
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Email Address"
                         app:startIconDrawable="@drawable/ic_ai_positive"
+                        app:boxCornerRadiusTopStart="@dimen/card_corner_radius"
+                        app:boxCornerRadiusTopEnd="@dimen/card_corner_radius"
+                        app:boxCornerRadiusBottomStart="@dimen/card_corner_radius"
+                        app:boxCornerRadiusBottomEnd="@dimen/card_corner_radius"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_marginBottom="16dp">
+                        android:layout_marginBottom="14dp">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_email"
@@ -89,14 +100,63 @@ Signup Activity Layout
 
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <!-- Institution (optional, from users table) -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Institution (optional)"
+                        app:startIconDrawable="@drawable/ic_review"
+                        app:boxCornerRadiusTopStart="@dimen/card_corner_radius"
+                        app:boxCornerRadiusTopEnd="@dimen/card_corner_radius"
+                        app:boxCornerRadiusBottomStart="@dimen/card_corner_radius"
+                        app:boxCornerRadiusBottomEnd="@dimen/card_corner_radius"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_marginBottom="14dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_institution"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Role Dropdown (from users table: role varchar) -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Role"
+                        app:startIconDrawable="@drawable/ic_ai_scan"
+                        app:boxCornerRadiusTopStart="@dimen/card_corner_radius"
+                        app:boxCornerRadiusTopEnd="@dimen/card_corner_radius"
+                        app:boxCornerRadiusBottomStart="@dimen/card_corner_radius"
+                        app:boxCornerRadiusBottomEnd="@dimen/card_corner_radius"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_marginBottom="14dp">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/spinner_role"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:text="researcher"
+                            tools:ignore="LabelFor" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Password -->
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Password"
                         app:startIconDrawable="@drawable/ic_check"
                         app:endIconMode="password_toggle"
+                        app:boxCornerRadiusTopStart="@dimen/card_corner_radius"
+                        app:boxCornerRadiusTopEnd="@dimen/card_corner_radius"
+                        app:boxCornerRadiusBottomStart="@dimen/card_corner_radius"
+                        app:boxCornerRadiusBottomEnd="@dimen/card_corner_radius"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_marginBottom="16dp">
+                        android:layout_marginBottom="14dp">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_password"
@@ -106,14 +166,19 @@ Signup Activity Layout
 
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <!-- Confirm Password -->
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Confirm Password"
                         app:startIconDrawable="@drawable/ic_check"
                         app:endIconMode="password_toggle"
+                        app:boxCornerRadiusTopStart="@dimen/card_corner_radius"
+                        app:boxCornerRadiusTopEnd="@dimen/card_corner_radius"
+                        app:boxCornerRadiusBottomStart="@dimen/card_corner_radius"
+                        app:boxCornerRadiusBottomEnd="@dimen/card_corner_radius"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_marginBottom="24dp">
+                        android:layout_marginBottom="20dp">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_confirm_password"
@@ -126,11 +191,11 @@ Signup Activity Layout
                     <Button
                         android:id="@+id/btn_signup"
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
+                        android:layout_height="56dp"
                         android:text="Sign Up"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:textStyle="bold"
-                        app:cornerRadius="10dp" />
+                        style="@style/Button.Primary" />
 
                 </LinearLayout>
 
@@ -141,13 +206,15 @@ Signup Activity Layout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="32dp">
+                android:layout_marginTop="28dp"
+                android:layout_marginBottom="16dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Already have an account? "
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:alpha="0.8" />
 
                 <TextView
                     android:id="@+id/tv_login"

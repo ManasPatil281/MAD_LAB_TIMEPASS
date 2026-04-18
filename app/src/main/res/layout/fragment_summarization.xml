@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+Summarization Fragment - ScholarHub
+Academic Summarizer editorial input with source material card and generate button
+-->
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:background="@color/surface">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,41 +16,83 @@
         android:orientation="vertical"
         android:padding="@dimen/padding_medium">
 
+        <!-- Editorial Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="@dimen/margin_large">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AI POWERED TOOLS"
+                style="@style/Text.Label.Upper"
+                android:textColor="@color/primary"
+                android:layout_marginBottom="@dimen/margin_small" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Academic Summarizer"
+                android:textSize="@dimen/text_size_headline"
+                android:textStyle="bold"
+                android:textColor="@color/on_surface"
+                android:fontFamily="serif"
+                android:layout_marginBottom="@dimen/margin_small" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Distill complex research into actionable insights."
+                android:textSize="@dimen/text_size_medium"
+                android:textColor="@color/on_surface_variant"
+                android:textStyle="italic" />
+
+        </LinearLayout>
+
+        <!-- Source Material Card -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="@dimen/card_corner_radius"
             app:cardElevation="@dimen/card_elevation"
+            app:cardBackgroundColor="@color/surface_container_lowest"
             android:layout_marginBottom="@dimen/margin_medium">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="@dimen/padding_medium">
+                android:padding="@dimen/padding_large">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Input Text"
-                    android:textSize="@dimen/text_size_large"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="@dimen/margin_small"/>
+                    android:text="SOURCE MATERIAL"
+                    style="@style/Text.Label.Upper"
+                    android:layout_marginBottom="@dimen/margin_medium" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Paste or type text to summarize..."
+                    android:hint="Paste your abstract or academic text here..."
                     app:boxStrokeColor="@color/primary"
+                    app:boxCornerRadiusTopStart="@dimen/card_corner_radius"
+                    app:boxCornerRadiusTopEnd="@dimen/card_corner_radius"
+                    app:boxCornerRadiusBottomStart="@dimen/card_corner_radius"
+                    app:boxCornerRadiusBottomEnd="@dimen/card_corner_radius"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_input"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:minHeight="150dp"
+                        android:minHeight="180dp"
                         android:gravity="top|start"
-                        android:inputType="textMultiLine" />
+                        android:inputType="textMultiLine"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textColor="@color/on_surface" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -53,50 +100,24 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- Model Selection -->
+        <include
+            android:id="@+id/model_selector"
+            layout="@layout/layout_model_selector"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_medium" />
+
+        <!-- Generate Button -->
         <Button
             android:id="@+id/btn_summarize"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Summarize Info"
+            android:text="Generate Summary"
             style="@style/Button.Primary"
             android:drawableStart="@drawable/ic_summarize"
             android:drawablePadding="@dimen/padding_small"
             android:layout_marginBottom="@dimen/margin_medium"/>
-
-        <!-- Results Section (Initially Hidden or Empty) -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_results"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="@dimen/card_corner_radius"
-            app:cardElevation="@dimen/card_elevation"
-            android:visibility="gone">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/padding_medium">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Summary"
-                    android:textSize="@dimen/text_size_large"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="@dimen/margin_small"/>
-
-                <TextView
-                    android:id="@+id/tv_summary_output"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Summary will appear here..."
-                    android:textSize="@dimen/text_size_medium"
-                    android:lineSpacingExtra="4dp"/>
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 

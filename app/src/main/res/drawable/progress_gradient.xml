@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Progress bar styled for ScholarHub editorial look -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@android:id/background">
-        <shape>
-            <corners android:radius="5dp"/>
-            <solid android:color="#E0E0E0"/>
+        <shape android:shape="rectangle">
+            <solid android:color="#ECEEF1" />
+            <corners android:radius="12dp" />
         </shape>
     </item>
     <item android:id="@android:id/progress">
-        <scale android:scaleWidth="100%">
-            <shape>
-                <corners android:radius="5dp"/>
+        <clip>
+            <shape android:shape="rectangle">
                 <gradient
-                    android:startColor="#FF5252"
-                    android:endColor="#D32F2F"
-                    android:angle="0"/>
+                    android:angle="0"
+                    android:startColor="#000666"
+                    android:endColor="#4C56AF"
+                    android:type="linear" />
+                <corners android:radius="12dp" />
             </shape>
-        </scale>
+        </clip>
     </item>
 </layer-list>
